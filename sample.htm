@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slide Reference</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<style>
+		body {
+			width: 100%;
+			background-color: #eee;
+		}
+		.all {
+			width: 100%;
+			float: left;
+		}
+		h1 {
+			color: #FFF;
+			background-color: #36B1BF;
+			padding: 20px;
+		}
+		h2 {
+			color: #02818D;
+		}
+		h3 {
+			background-color: #36B1BF;
+			color: #02818D;
+			padding: 20px;
+		}
+		.btn-success, .btn-success:focus, .btn-success:visited, .btn-success:hover, .btn-success:active {
+			background-color: #F2385A;
+		}
+		.label-success {
+			line-height: 25px;
+			font-size: 14px;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="all">
+
+		<div class="container-fluid">
+			
+			<div class="row-fluid">
+				<div class="col-sm-12">
+					
+					<h2>Customization Example</h2>
+
+					<div class="col-sm-12">
+						
+						&lt;!-- Add jQuery here --&gt;<br>
+						<br>
+						&lt;script src=&quot;jquery.slidereference.js&quot;&gt;&lt;/script&gt;<br>
+						<br>
+						&lt;script&gt;<br>
+						<br>
+							// &gt;&gt; After Page Load<br>
+							$(function(){<br>
+						<br>
+								// &gt;&gt; Slidereference event handler<br>
+								$(&quot;.slidereference&quot;).bind(&quot;click&quot;, function(){<br>
+						<br>
+									// Optional Toggle Btn Text<br>
+									if ($(this).text() == 'Deactivate'){<br>
+										$(this).text('Activate');<br>
+									} else {<br>
+										$(this).text('Deactivate');<br>
+										// Clear previews<br>
+										$('#slidereference_div').remove();<br>
+									}<br>
+						<br>
+									// Create new slide<br>
+									$('&lt;div/&gt;')<br>
+										.prop('id','slidereference_div')<br>
+										.appendTo('body');<br>
+						<br>
+									// Run plugin<br>
+									$('#slidereference_div').slidereference({<br>
+											'url' : 'http://www.google.com/',<br>
+								            loading_text : "Please wait...",<br>
+								            ownsite_width : "60%",<br>
+						            		reference_width : "40%",<br>
+											'loadingcss' : {<br>
+														"background-color" : "red"<br>
+													}<br>
+										});<br>
+						<br>
+								});<br>
+								// &lt;&lt; Slidereference event handler<br>
+						<br>
+							});<br>
+							// &lt;&lt; After Page Load<br>
+						<br>
+						&lt;/script&gt;<br>
+
+					</div>
+						
+					<hr>
+					<hr>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

@@ -109,95 +109,18 @@
 					<hr>
 					<h3>Customization</h3>
 					<p class="clearfix">
-						The pluing comes with some Standard data, as described below. You can create a Javascript Object Literal and pass it to the plugin to overwrite it.
-						<pre class="prettyprint linenums">
-{
-url : 'http://www.fabionolasco.com/',
-loading_text : "Loading...",
-ownsite_width : "70%",
-ownsite_container : ".all",
-reference_width : "30%",
-css : {
-    "position" : "fixed",
-    "height" : "100%",
-    "background-color" : "#fff",
-    "border-left" : "1px solid #000",
-    "top" : "0px",
-    "z-index" : "1",
-    "left" : "100%"
-},
-loadingcss : {
-    "position" : "fixed",
-    "height" : "100%",
-    "background-color" : "#999",
-    "border-left" : "1px solid #000",
-    "top" : "0px",
-    "left" : "100%",
-    "line-height" : "100px",
-    "font-size" : "2em",
-    "font-weight" : "bold",
-    "color" : "#fff",
-    "text-align" : "center",
-    "z-index" : "2",
-    "margin-left" : "0%"
-},
-animation : {
-    "-webkit-transition" : "all 150ms ease",
-    "-moz-transition" : "all 150ms ease",
-    "-o-transition" : "all 150ms ease",
-    "-ms-transition" : "all 150ms ease",
-    "transition" : "all 150ms ease"
-}
-						</pre>
+
+						<p class="col-sm-12">
+						The pluing comes with some Standard data, as described below. You can create a Javascript Object Literal and pass it to the plugin to overwrite it.</p>
 
 						<hr>
+						
+						<button class="slidereference btn btn-success btn-lg" data-originaltext="All Customization Options" data-url="http://www.fabionolasco.com/slidereference/config.htm">All Customization Options</button>
 
-						<h4>Example of customization</h4>
+						<hr>
+						
+						<button class="slidereference btn btn-success btn-lg" data-originaltext="Customization Example" data-url="http://www.fabionolasco.com/slidereference/sample.htm">Customization Example</button>
 
-						<pre class="prettyprint linenums">
-&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;jquery.slidereference.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-
-	// &gt;&gt; After Page Load
-	$(function(){
-
-		// &gt;&gt; Slidereference event handler
-		$(&quot;.slidereference&quot;).bind(&quot;click&quot;, function(){
-
-			// Optional Toggle Btn Text
-			if ($(this).text() == 'Deactivate'){
-				$(this).text('Activate');
-			} else {
-				$(this).text('Deactivate');
-				// Clear previews
-				$('#slidereference_div').remove();
-			}
-
-			// Create new slide
-			$('&lt;div/&gt;')
-				.prop('id','slidereference_div')
-				.appendTo('body');
-
-			// Run plugin
-			$('#slidereference_div').slidereference({
-					'url' : 'http://www.google.com/',
-		            loading_text : "Please wait...",
-		            ownsite_width : "60%",
-            		reference_width : "40%",
-					'loadingcss' : {
-								"background-color" : "red"
-							}
-				});
-
-		});
-		// &lt;&lt; Slidereference event handler
-
-	});
-	// &lt;&lt; After Page Load
-
-&lt;/script&gt;
-						</pre>
 					</p>
 					<hr>
 					<h3>Compatibility</h3>
@@ -255,11 +178,18 @@ animation : {
 			// >> Slidereference event handler
 			$(".slidereference").bind("click", function(){
 
+				// If another instace was already created, bring the btn text
+				$('[data-active="yes"]').each(function(){
+					$(this).text($(this).attr('data-originaltext'));
+				});
+
 				// Optional
 				// Toggle Btn Text
 				if ($(this).text() == 'Deactivate'){
+					$(this).attr('data-active','no');
 					$(this).text($(this).attr('data-originaltext'));
 				} else {
+					$(this).attr('data-active','yes');
 					$(this).text('Deactivate');
 					// Clear previews
 					$('#slidereference_div').remove();
