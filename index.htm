@@ -48,10 +48,10 @@
 					<h2>Reference Slider</h2>
 					<hr>
 					<p class="clearfix">
-						This ultra simple and light plugin will help you link two websites by adding a slider with an iframe. You can use it to link keywords to Dictionaries, Wikipedia, etc.
+						This ultra simple and light plugin that will help you to link two websites by adding a slider with an iframe. You can use it to link keywords to Dictionaries, Wikipedia, etc, so there is no popups nor the need to leave the page.
 					</p>
 					<hr>
-					<button class="slidereference btn btn-success btn-lg" data-url="http://www.fabionolasco.com/">Activate</button>
+					<button class="slidereference btn btn-success btn-lg" data-originaltext="Activate" data-url="http://www.fabionolasco.com/">Activate</button>
 					<hr>
 					<p class="clearfix">
 						<pre class="prettyprint linenums">
@@ -219,6 +219,25 @@ animation : {
 					</p>
 					<hr>
 					<h3>Github</h3>
+					<p class="clearfix">
+						<a href="https://github.com/gomidefabio/slidereference" target="_blank">https://github.com/gomidefabio/slidereference</a>
+					</p>
+					<hr>
+					<h3>License and Contribution</h3>
+					<p class="clearfix">
+							<a href="http://opensource.org/licenses/MIT" target="_blank" class="pull-left img-thumbnail" style="margin:0px 20px 20px 0px"><img src="OSI-Approved-License-100x137.png" alt="MIT"></a>
+						MIT License<br>&nbsp;<br>
+						<a href="javascript:void(0)" data-url="http://en.m.wikipedia.org/wiki/MIT_License" class="slidereference" data-originaltext="http://en.m.wikipedia.org/wiki/MIT_License">http://en.m.wikipedia.org/wiki/MIT_License</a><br>&nbsp;<br>
+						Feel free to use and modify as you want (commercial and non-commercial use).<br>&nbsp;<br>
+						Contribution will be greatly appreciated.
+					</p>
+					<hr>
+					<h3>Author</h3>
+					<p class="clearfix">
+						<a href="http://www.fabionolasco.com/">Fabio Gomide Nolasco</a>
+					</p>
+					<hr>
+					<hr>
 
 				</div>
 			</div>
@@ -239,7 +258,7 @@ animation : {
 				// Optional
 				// Toggle Btn Text
 				if ($(this).text() == 'Deactivate'){
-					$(this).text('Activate');
+					$(this).text($(this).attr('data-originaltext'));
 				} else {
 					$(this).text('Deactivate');
 					// Clear previews
@@ -252,7 +271,8 @@ animation : {
 					.appendTo('body');
 
 				// Run plugin
-				$('#slidereference_div').slidereference();
+				var url  = $(this).attr('data-url');
+				$('#slidereference_div').slidereference({'url' : url});
 
 			});
 			// << Slidereference event handler
