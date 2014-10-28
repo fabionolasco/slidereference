@@ -52,44 +52,6 @@
 					</p>
 					<hr>
 					<button class="slidereference btn btn-success btn-lg" data-originaltext="Activate" data-url="http://www.fabionolasco.com/">Activate</button>
-					<hr>
-					<p class="clearfix">
-						<pre class="prettyprint linenums">
-&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;jquery.slidereference.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-
-	// &gt;&gt; After Page Load
-	$(function(){
-
-		// &gt;&gt; Slidereference event handler
-		$(&quot;.slidereference&quot;).bind(&quot;click&quot;, function(){
-
-			// Optional Toggle Btn Text
-			if ($(this).text() == 'Deactivate'){
-				$(this).text('Activate');
-			} else {
-				$(this).text('Deactivate');
-				// Clear previews
-				$('#slidereference_div').remove();
-			}
-
-			// Create new slide
-			$('&lt;div/&gt;')
-				.prop('id','slidereference_div')
-				.appendTo('body');
-
-			// Run plugin
-			$('#slidereference_div').slidereference();
-
-		});
-		// &lt;&lt; Slidereference event handler
-
-	});
-	// &lt;&lt; After Page Load
-
-&lt;/script&gt;
-						</pre>
 					</p>
 					<hr>
 					<p class="clearfix">
@@ -100,11 +62,20 @@
 							<li>Add attributes to elements that you desire to link
 								<ul>
 									<li>class = "slidereference"</li>
-									<li>data-url = "YourURL"</li>
+									<li>optional: data-url = "YourURL"</li>
+									<li>optional: data-originaltext = "ElementText"</li>
+									<li>optional: data-clicktext = "ElementTextAfterClicked"</li>
+									<li>optional: data-options = "{JS Object Will All Options for Slider}"</li>
 								</ul>
 							</li>
 							<li>Run plugin</li>
 						</ol>
+						<br>
+						<a href="javascript:void(0)"
+							class="slidereference btn btn-success btn-lg"
+							data-originaltext="OriginalText"
+							data-clicktext="ClickedText"
+							data-url="http://en.m.wikipedia.org/wiki/example">Example</a>
 					</p>
 					<hr>
 					<h3>Customization</h3>
