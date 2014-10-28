@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slide Reference</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<style>
+		body {
+			width: 100%;
+			background-color: #eee;
+		}
+		.all {
+			width: 100%;
+			float: left;
+		}
+		h1 {
+			color: #FFF;
+			background-color: #36B1BF;
+			padding: 20px;
+		}
+		h2 {
+			color: #02818D;
+		}
+		h3 {
+			background-color: #36B1BF;
+			color: #02818D;
+			padding: 20px;
+		}
+		.btn-success, .btn-success:focus, .btn-success:visited, .btn-success:hover, .btn-success:active {
+			background-color: #F2385A;
+		}
+		.label-success {
+			line-height: 25px;
+			font-size: 14px;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="all">
+
+		<div class="container-fluid">
+			
+			<div class="row-fluid">
+				<div class="col-sm-12">
+					
+					<h1>jQuery Plugin</h1>
+					<h2>Reference Slider</h2>
+					<hr>
+					<p class="clearfix">
+						This ultra simple and light plugin will help you link two websites by adding a slider with an iframe. You can use it to link keywords to Dictionaries, Wikipedia, etc.
+					</p>
+					<hr>
+					<button class="slidereference btn btn-success btn-lg" data-url="http://www.fabionolasco.com/">Activate</button>
+					<hr>
+					<p class="clearfix">
+						<pre class="prettyprint linenums">
+&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;jquery.slidereference.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+	// &gt;&gt; After Page Load
+	$(function(){
+
+		// &gt;&gt; Slidereference event handler
+		$(&quot;.slidereference&quot;).bind(&quot;click&quot;, function(){
+
+			// Optional Toggle Btn Text
+			if ($(this).text() == 'Deactivate'){
+				$(this).text('Activate');
+			} else {
+				$(this).text('Deactivate');
+				// Clear previews
+				$('#slidereference_div').remove();
+			}
+
+			// Create new slide
+			$('&lt;div/&gt;')
+				.prop('id','slidereference_div')
+				.appendTo('body');
+
+			// Run plugin
+			$('#slidereference_div').slidereference();
+
+		});
+		// &lt;&lt; Slidereference event handler
+
+	});
+	// &lt;&lt; After Page Load
+
+&lt;/script&gt;
+						</pre>
+					</p>
+					<hr>
+					<p class="clearfix">
+						<h3>Five Steps</h3>
+						<ol>
+							<li>Add jQuery to page</li>
+							<li>Add plugin to page</li>
+							<li>Add attributes to elements that you desire to link
+								<ul>
+									<li>class = "slidereference"</li>
+									<li>data-url = "YourURL"</li>
+								</ul>
+							</li>
+							<li>Run plugin</li>
+						</ol>
+					</p>
+					<hr>
+					<h3>Customization</h3>
+					<p class="clearfix">
+						The pluing comes with some Standard data, as described below. You can create a Javascript Object Literal and pass it to the plugin to overwrite it.
+						<pre class="prettyprint linenums">
+{
+url : 'http://www.fabionolasco.com/',
+loading_text : "Loading...",
+ownsite_width : "70%",
+ownsite_container : ".all",
+reference_width : "30%",
+css : {
+    "position" : "fixed",
+    "height" : "100%",
+    "background-color" : "#fff",
+    "border-left" : "1px solid #000",
+    "top" : "0px",
+    "z-index" : "1",
+    "left" : "100%"
+},
+loadingcss : {
+    "position" : "fixed",
+    "height" : "100%",
+    "background-color" : "#999",
+    "border-left" : "1px solid #000",
+    "top" : "0px",
+    "left" : "100%",
+    "line-height" : "100px",
+    "font-size" : "2em",
+    "font-weight" : "bold",
+    "color" : "#fff",
+    "text-align" : "center",
+    "z-index" : "2",
+    "margin-left" : "0%"
+},
+animation : {
+    "-webkit-transition" : "all 150ms ease",
+    "-moz-transition" : "all 150ms ease",
+    "-o-transition" : "all 150ms ease",
+    "-ms-transition" : "all 150ms ease",
+    "transition" : "all 150ms ease"
+}
+						</pre>
+
+						<hr>
+
+						<h4>Example of customization</h4>
+
+						<pre class="prettyprint linenums">
+&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;jquery.slidereference.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+	// &gt;&gt; After Page Load
+	$(function(){
+
+		// &gt;&gt; Slidereference event handler
+		$(&quot;.slidereference&quot;).bind(&quot;click&quot;, function(){
+
+			// Optional Toggle Btn Text
+			if ($(this).text() == 'Deactivate'){
+				$(this).text('Activate');
+			} else {
+				$(this).text('Deactivate');
+				// Clear previews
+				$('#slidereference_div').remove();
+			}
+
+			// Create new slide
+			$('&lt;div/&gt;')
+				.prop('id','slidereference_div')
+				.appendTo('body');
+
+			// Run plugin
+			$('#slidereference_div').slidereference({
+					'url' : 'http://www.google.com/',
+		            loading_text : "Please wait...",
+		            ownsite_width : "60%",
+            		reference_width : "40%",
+					'loadingcss' : {
+								"background-color" : "red"
+							}
+				});
+
+		});
+		// &lt;&lt; Slidereference event handler
+
+	});
+	// &lt;&lt; After Page Load
+
+&lt;/script&gt;
+						</pre>
+					</p>
+					<hr>
+					<h3>Compatibility</h3>
+					<p class="clearfix">
+						<h4>jQuery: </h4>
+						<span class="label label-success">1.9+</span>
+					</p>
+					<p class="clearfix">
+						<h4>Plugin - With Animation: </h4>
+						<span class="label label-success">IE 10+</span>
+						<span class="label label-success">FF 16+</span>
+						<span class="label label-success">Chrome 26+</span>
+						<span class="label label-success">Safari 6.1+</span>
+						<span class="label label-success">Opera 12.1+</span>
+					</p>
+					<p class="clearfix">
+						<h4>Plugin - Without Animation: </h4>
+						<span class="label label-success">IE 8+</span>
+					</p>
+					<hr>
+					<h3>Github</h3>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="jquery.slidereference.js"></script>
+	<script>
+
+		// >> After Page Load
+		$(function(){
+
+			// >> Slidereference event handler
+			$(".slidereference").bind("click", function(){
+
+				// Optional
+				// Toggle Btn Text
+				if ($(this).text() == 'Deactivate'){
+					$(this).text('Activate');
+				} else {
+					$(this).text('Deactivate');
+					// Clear previews
+					$('#slidereference_div').remove();
+				}
+
+				// Create new slide
+				$('<div/>')
+					.prop('id','slidereference_div')
+					.appendTo('body');
+
+				// Run plugin
+				$('#slidereference_div').slidereference();
+
+			});
+			// << Slidereference event handler
+
+		});
+		// << After Page Load
+
+	</script>
+
+</body>
+</html>
