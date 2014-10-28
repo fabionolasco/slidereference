@@ -48,7 +48,7 @@
 					<h2>Reference Slider</h2>
 					<hr>
 					<p class="clearfix">
-						This ultra simple and light plugin that will help you to link two websites by adding a slider with an iframe. You can use it to link keywords to Dictionaries, Wikipedia, etc, so there is no popups nor the need to leave the page.
+						Ultra simple and light plugin that will help you to link two websites. It adds a slider with an iframe, so you can link the elements of your site, like keywords and buttons, to external websites like Dictionaries, <a href="javascript:void(0)" data-url="http://en.m.wikipedia.org/wiki/Wikipedia" class="slidereference" data-originaltext="Wikipedia" data-clicktext="Wikipedia">Wikipedia</a>, etc. In this way you don't bother your visitors with annoying popups nor make them leave your page.
 					</p>
 					<hr>
 					<button class="slidereference btn btn-success btn-lg" data-originaltext="Activate" data-url="http://www.fabionolasco.com/">Activate</button>
@@ -178,21 +178,36 @@
 			// >> Slidereference event handler
 			$(".slidereference").bind("click", function(){
 
-				// If another instace was already created, bring the btn text
-				$('[data-active="yes"]').each(function(){
-					$(this).text($(this).attr('data-originaltext'));
-				});
+				var clickelement = $(this);
 
 				// Optional
 				// Toggle Btn Text
-				if ($(this).text() == 'Deactivate'){
+				if ($(this).attr('data-active') == 'yes'){
+
 					$(this).attr('data-active','no');
 					$(this).text($(this).attr('data-originaltext'));
+
 				} else {
+
+					// If another instace was already created, bring the btn text
+					$('[data-active="yes"]').each(function(){
+						if (clickelement != $(this)){
+							$(this).text($(this).attr('data-originaltext'));
+							$(this).attr('data-active','no');
+						}
+					});
+
 					$(this).attr('data-active','yes');
-					$(this).text('Deactivate');
+
+					if ($(this).attr('data-clicktext')){ 
+						$(this).text($(this).attr('data-clicktext'));
+					} else {
+						$(this).text('Deactivate');
+					}
+					
 					// Clear previews
 					$('#slidereference_div').remove();
+
 				}
 
 				// Create new slide
@@ -200,9 +215,19 @@
 					.prop('id','slidereference_div')
 					.appendTo('body');
 
+				// Option
+				var options;
+				// Data-url is passed, use it
+				if ($(this).attr('data-url')){
+					options  = {'url' : $(this).attr('data-url')};
+				}
+				// Data-options is passed, use it instead
+				if ($(this).attr('data-options')){ 
+					options  = $(this).attr('data-options');
+				}
+
 				// Run plugin
-				var url  = $(this).attr('data-url');
-				$('#slidereference_div').slidereference({'url' : url});
+				$('#slidereference_div').slidereference(options);
 
 			});
 			// << Slidereference event handler
