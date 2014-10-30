@@ -10,20 +10,55 @@
 * @param {jQuery} $
 * @todo Remove CSS3 animation and add jQuery animation to make it work in older browsers
 * @todo Create minified version and put on github
-* @todo Add close button choice
-* @todo Add resize iframe width choice
 * @todo Create way to style iframe
+* @todo Close btn only hide, in case user wants to reopen
 **/
 (function ($) {
 
     "use strict";
 
     var defaults = {
-            url : 'http://www.fabionolasco.com/',
-            loading_text : "Loading...",
-            ownsite_width : "70%",
-            ownsite_container : ".all",
-            reference_width : "30%",
+            url: 'http://www.fabionolasco.com/',
+            loading_text: "Loading...",
+            ownsite_width: "70%",
+            ownsite_container: ".all",
+            reference_width: "30%",
+            iframe_border: "0",
+            iframe_css: {
+                "width": "100%",
+                "height": "100%",
+                "padding": "20px"
+            },
+            resizable: "yes",
+            resize_bar_css: {
+                "background-color": "#777",
+                "height": "100%",
+                "position": "absolute",
+                "width": "3px",
+                "cursor": "col-resize",
+                "top": "0px",
+                "left": "0px"
+            },
+            resize_icon: "yes",
+            resize_icon_css: {
+                "top": "50%",
+                "opacity":"0.5"
+            },
+            close_btn: "yes",
+            close_btn_css: {
+                "display": "block",
+                "width": "18px",
+                "line-height": "24px",
+                "background-color": "#777",
+                "font-size": "11px",
+                "font-weight": "bold",
+                "color": "#fff",
+                "cursor": "pointer",
+                "position": "absolute",
+                "top": "0px",
+                "left": "0px",
+                "text-align": "center"
+            },
             css : {
                 "position" : "fixed",
                 "height" : "100%",
@@ -75,12 +110,7 @@
             } else {
 
                 // If another instace was already running, remove it
-                $('.slidereference[data-active="yes"]').each(function () {
-                    if (clickelement !== $(this)) {
-                        $(this).text($(this).attr('data-originaltext'));
-                        $(this).attr('data-active', 'no');
-                    }
-                });
+                clearAll(clickelement);
 
                 // Make button active
                 $(this).attr('data-active', 'yes');
@@ -119,13 +149,28 @@
     // << Slidereference event handler
 
     function Slidereference(element, options) {
+        if (options.length > 0){
+            options = options.replace(/\'/g, '"');
+            options = $.parseJSON(options);
+        }
         this.config = $.extend({}, defaults, options);
+                console.log(this.config);
         this.element = element;
         this.init();
     }
 
     function changeCss(element, css_comand, css_value) {
         $(element).css(css_comand, css_value);
+    }
+
+    function clearAll(clickelement) {
+        // If another instace was already running, remove it
+        $('.slidereference[data-active="yes"]').each(function () {
+            if (clickelement !== $(this)) {
+                $(this).text($(this).attr('data-originaltext'));
+                $(this).attr('data-active', 'no');
+            }
+        });
     }
 
     Slidereference.prototype.init = function () {
@@ -148,6 +193,11 @@
                 slidereference_bars = $('<div/>'),
                 bars_style = "<style>loading{display:block;width:200px;height:200px;margin:0 auto;border:none;position:relative}.loader,.loader:after,.loader:before{background:#FFF;-webkit-animation:load1 1s infinite ease-in-out;animation:load1 1s infinite ease-in-out;width:1em;height:4em}.loader:after,.loader:before{position:absolute;top:0;content:''}.loader:before{left:-1.5em}.loader{text-indent:-9999em;margin:2em auto;position:relative;font-size:11px;-webkit-animation-delay:-.16s;animation-delay:-.16s}.loader:after{left:1.5em;-webkit-animation-delay:-.32s;animation-delay:-.32s}@-webkit-keyframes load1{0%,100%,80%{box-shadow:0 0 #FFF;height:4em}40%{box-shadow:0 -2em #fff;height:5em}}@keyframes load1{0%,100%,80%{box-shadow:0 0 #FFF;height:4em}40%{box-shadow:0 -2em #fff;height:5em}}</style>",
                 w = this.config.reference_width,
+                resizable_bar,
+                resizable_bar_icon,
+                close_btn,
+                iframe,
+                dragging = false,
                 ownsite_container = this.config.ownsite_container,
                 ownsite_width = this.config.ownsite_width;
 
@@ -173,12 +223,60 @@
             // Bring loading screen
             window.setTimeout(function () { changeCss('#slidereference_loading', "margin-left", '-' + w); }, 1);
 
+            // Resizable Bar
+            if (this.config.resizable === 'yes') {
+
+                resizable_bar = $('<div />').prop("id", "slidereference_dragbar").css(this.config.resize_bar_css);
+
+                // If resize bar has icon
+                if (this.config.resize_icon === 'yes') {
+
+                    // Thanks to http://one-div.com/
+                    resizable_bar_icon = $('<div />', {
+                            "class": "slidereference_hamburger"
+                        })
+                        .css(this.config.resize_icon_css)
+                        .html('<style>.slidereference_hamburger{position:relative;font-size:10px;width:3.3em;height:3.3em;background:#383b3e;border-radius:.3em;top: 50%;font-size:5px;height:30px}.slidereference_hamburger:before{border-top:.3em solid #efefef;content:"";position:absolute;width:1.9em;height:1em;margin:auto;border-bottom:.3em solid #efefef;top:1em;left:.7em;border-radius:.1em}.slidereference_hamburger:after{display:block;content:"";position:absolute;top:1.6em;width:1.9em;height:.3em;background:#efefef;left:.7em;border-radius:.1em}</style>')
+                        .appendTo(resizable_bar);
+                        
+                }
+            }
+
+            // Create iframe
+            iframe = $('<iframe />', {
+                    id: "slidereference_iframe",
+                    src: this.config.url,
+                    frameborder: this.config.iframe_border,
+                    css: this.config.iframe_css
+                })
+
+
             // Create Slide with iframe
             $(slide)
                 .prop("id", "slidereference")
-                .html('<iframe id="slidereference_iframe" src="' + this.config.url + '" style="width:100%;height:100%;"></iframe>')
+                .append(iframe)
+                .append(resizable_bar)
                 .css(this.config.css)
                 .appendTo(this.element);
+
+            // Close Btn
+            if (this.config.close_btn === 'yes') {
+
+                close_btn = $("<div />", {
+                        id: "slidereference_close"
+                    })
+                    .html('X')
+                    .css(this.config.close_btn_css);
+
+                $('#slidereference').append(close_btn);
+                $("#slidereference_close")
+                    .click(function () {
+                        clearAll();
+                        $("#slidereference").remove();
+                        $('#slidereference_div').remove();
+                        $(ownsite_container).css({"width" : "100%"});
+                    });
+            }
 
             // Prevent Document to Scroll if iframe is been scrolled
             $('#slidereference').bind('mousewheel DOMMouseScroll', function (e) {
@@ -198,6 +296,67 @@
                 window.setTimeout(function () { $("#slidereference_loading").fadeOut(5000).remove(); }, 1);
 
             });
+
+            // >> Resizable
+            if (this.config.resizable === 'yes') {
+
+                $('#slidereference_dragbar').mousedown(function (e) {
+
+                    e.preventDefault();
+                    dragging = true;
+
+                    var main = $("#slidereference"),
+                        coverall = $('<div />', {
+                            id: 'slidereference_coverall',
+                            css: {
+                                "position": "fixed",
+                                "width": "100%",
+                                "height": "100%",
+                                "opacity": "0",
+                                "z-index": "999991"
+                            }
+                        }),
+                        ghostbar = $('<div />', {
+                            id: 'slidereference_ghostbar',
+                            css: {
+                                "height": main.outerHeight(),
+                                "top": main.offset().top,
+                                "left": main.offset().left,
+                                "width": "3px",
+                                "background-color": "#000",
+                                "opacity": "1",
+                                "position": "absolute",
+                                "cursor": "col-resize",
+                                "z-index": "999999"
+                            }
+                        });
+
+                    $(ghostbar).appendTo($('body'));
+                    $(coverall).appendTo($('body'));
+
+                    $(document).mousemove(function (e) {
+                        ghostbar.css("left", e.pageX + 2);
+                    });
+
+                });
+
+                $(document).mouseup(function (e) {
+                    var width_right,
+                        xpos;
+                    if (dragging) {
+                        xpos = e.pageX + 2;
+                        width_right = $(window).width() - xpos;
+                        $(ownsite_container).css({"float": "left", "width": xpos  + 'px'});
+                        $("#slidereference").css({"left": xpos + "px", "width": width_right  + 'px', "margin-left": "0px"});
+                        $('#slidereference_ghostbar').remove();
+                        $('#slidereference_coverall').remove();
+                        $(document).unbind('mousemove');
+                        dragging = false;
+                    }
+                });
+
+            }
+            // << Resizable
 
         }
 
