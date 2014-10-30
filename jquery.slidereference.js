@@ -57,6 +57,67 @@
             }
         };
 
+    // >> Slidereference event handler
+    function AddEventHandler(element) {
+
+        $(element).find(".slidereference").bind("click", function () {
+
+            var clickelement = $(this),
+                options;
+
+            // Optional
+            // Toggle Btn Text
+            if ($(this).attr('data-active') === 'yes') {
+
+                $(this).attr('data-active', 'no');
+                $(this).text($(this).attr('data-originaltext'));
+
+            } else {
+
+                // If another instace was already running, remove it
+                $('.slidereference[data-active="yes"]').each(function () {
+                    if (clickelement !== $(this)) {
+                        $(this).text($(this).attr('data-originaltext'));
+                        $(this).attr('data-active', 'no');
+                    }
+                });
+
+                // Make button active
+                $(this).attr('data-active', 'yes');
+
+                if ($(this).attr('data-clicktext')) {
+                    $(this).text($(this).attr('data-clicktext'));
+                } else {
+                    $(this).text('Deactivate');
+                }
+
+                // Clear previews
+                $('#slidereference_div').remove();
+
+            }
+
+            // Create new slide
+            $('<div/>')
+                .prop('id', 'slidereference_div')
+                .appendTo('body');
+
+            // Option
+            // Data-url is passed, use it
+            if ($(this).attr('data-url')) {
+                options  = {'url' : $(this).attr('data-url')};
+            }
+            // Data-options is passed, use it instead
+            if ($(this).attr('data-options')) {
+                options  = $(this).attr('data-options');
+            }
+
+            // Run plugin
+            $('#slidereference_div').slidereference(options);
+
+        });
+    }
+    // << Slidereference event handler
+
     function Slidereference(element, options) {
         this.config = $.extend({}, defaults, options);
         this.element = element;
@@ -119,6 +180,14 @@
                 .css(this.config.css)
                 .appendTo(this.element);
 
+            // Prevent Document to Scroll if iframe is been scrolled
+            $('#slidereference').bind('mousewheel DOMMouseScroll', function (e) {
+                var e0 = e.originalEvent,
+                    delta = e0.wheelDelta || -e0.detail;
+                this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+                e.preventDefault();
+            });
+
             // Remove loading after content is loaded
             $("#slidereference_iframe").bind("load", function () {
 
@@ -133,67 +202,6 @@
         }
 
     }
-
-    // >> Slidereference event handler
-    function AddEventHandler (element) {
-    
-        $(element).find(".slidereference").bind("click", function () {
-
-            var clickelement = $(this);
-
-            // Optional
-            // Toggle Btn Text
-            if ($(this).attr('data-active') == 'yes'){
-
-                $(this).attr('data-active','no');
-                $(this).text($(this).attr('data-originaltext'));
-
-            } else {
-
-                // If another instace was already running, remove it
-                $('.slidereference[data-active="yes"]').each(function(){
-                    if (clickelement != $(this)){
-                        $(this).text($(this).attr('data-originaltext'));
-                        $(this).attr('data-active','no');
-                    }
-                });
-
-                // Make button active
-                $(this).attr('data-active','yes');
-
-                if ($(this).attr('data-clicktext')){ 
-                    $(this).text($(this).attr('data-clicktext'));
-                } else {
-                    $(this).text('Deactivate');
-                }
-                
-                // Clear previews
-                $('#slidereference_div').remove();
-
-            }
-
-            // Create new slide
-            $('<div/>')
-                .prop('id','slidereference_div')
-                .appendTo('body');
-
-            // Option
-            var options;
-            // Data-url is passed, use it
-            if ($(this).attr('data-url')){
-                options  = {'url' : $(this).attr('data-url')};
-            }
-            // Data-options is passed, use it instead
-            if ($(this).attr('data-options')){ 
-                options  = $(this).attr('data-options');
-            }
-
-            // Run plugin
-            $('#slidereference_div').slidereference(options);
-
-        });
-    }
-    // << Slidereference event handler
 
     // Plugin
     $.fn.slidereference = function (options) {
