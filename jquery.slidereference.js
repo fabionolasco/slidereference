@@ -42,13 +42,29 @@
             resize_icon: "yes",
             resize_icon_css: {
                 "top": "50%",
-                "opacity":"0.5"
+                "opacity": "0.5"
             },
-            close_btn: "yes",
+            close_btn: "no",
             close_btn_css: {
                 "display": "block",
                 "width": "18px",
                 "line-height": "24px",
+                "background-color": "#777",
+                "font-size": "11px",
+                "font-weight": "bold",
+                "color": "#fff",
+                "cursor": "pointer",
+                "position": "absolute",
+                "top": "0px",
+                "left": "0px",
+                "text-align": "center"
+            },
+            close_bar: "yes",
+            close_bar_text: "CLOSE",
+            close_bar_css: {
+                "display": "block",
+                "width": "100%",
+                "line-height": "30px",
                 "background-color": "#777",
                 "font-size": "11px",
                 "font-weight": "bold",
@@ -91,6 +107,17 @@
                 "transition" : "all 150ms ease"
             }
         };
+
+    // Return original state of linked elements
+    function clearAll(clickelement) {
+        // If another instace was already running, remove it
+        $('.slidereference[data-active="yes"]').each(function () {
+            if (clickelement !== $(this)) {
+                $(this).text($(this).attr('data-originaltext'));
+                $(this).attr('data-active', 'no');
+            }
+        });
+    }
 
     // >> Slidereference event handler
     function AddEventHandler(element) {
@@ -149,28 +176,17 @@
     // << Slidereference event handler
 
     function Slidereference(element, options) {
-        if (options.length > 0){
+        if (options.length > 0) {
             options = options.replace(/\'/g, '"');
             options = $.parseJSON(options);
         }
         this.config = $.extend({}, defaults, options);
-                console.log(this.config);
         this.element = element;
         this.init();
     }
 
     function changeCss(element, css_comand, css_value) {
         $(element).css(css_comand, css_value);
-    }
-
-    function clearAll(clickelement) {
-        // If another instace was already running, remove it
-        $('.slidereference[data-active="yes"]').each(function () {
-            if (clickelement !== $(this)) {
-                $(this).text($(this).attr('data-originaltext'));
-                $(this).attr('data-active', 'no');
-            }
-        });
     }
 
     Slidereference.prototype.init = function () {
@@ -233,22 +249,22 @@
 
                     // Thanks to http://one-div.com/
                     resizable_bar_icon = $('<div />', {
-                            "class": "slidereference_hamburger"
-                        })
+                        "class": "slidereference_hamburger"
+                    })
                         .css(this.config.resize_icon_css)
                         .html('<style>.slidereference_hamburger{position:relative;font-size:10px;width:3.3em;height:3.3em;background:#383b3e;border-radius:.3em;top: 50%;font-size:5px;height:30px}.slidereference_hamburger:before{border-top:.3em solid #efefef;content:"";position:absolute;width:1.9em;height:1em;margin:auto;border-bottom:.3em solid #efefef;top:1em;left:.7em;border-radius:.1em}.slidereference_hamburger:after{display:block;content:"";position:absolute;top:1.6em;width:1.9em;height:.3em;background:#efefef;left:.7em;border-radius:.1em}</style>')
                         .appendTo(resizable_bar);
-                        
+
                 }
             }
 
             // Create iframe
             iframe = $('<iframe />', {
-                    id: "slidereference_iframe",
-                    src: this.config.url,
-                    frameborder: this.config.iframe_border,
-                    css: this.config.iframe_css
-                })
+                id: "slidereference_iframe",
+                src: this.config.url,
+                frameborder: this.config.iframe_border,
+                css: this.config.iframe_css
+            });
 
 
             // Create Slide with iframe
@@ -263,8 +279,8 @@
             if (this.config.close_btn === 'yes') {
 
                 close_btn = $("<div />", {
-                        id: "slidereference_close"
-                    })
+                    id: "slidereference_close"
+                })
                     .html('X')
                     .css(this.config.close_btn_css);
 
@@ -276,6 +292,27 @@
                         $('#slidereference_div').remove();
                         $(ownsite_container).css({"width" : "100%"});
                     });
+            }
+
+            // Close BAR
+            if (this.config.close_bar === 'yes') {
+
+                close_btn = $("<div />", {
+                    id: "slidereference_close"
+                })
+                    .html(this.config.close_bar_text)
+                    .css(this.config.close_bar_css);
+
+                $('#slidereference').append(close_btn);
+                $("#slidereference_close")
+                    .click(function () {
+                        clearAll();
+                        $("#slidereference").remove();
+                        $('#slidereference_div').remove();
+                        $(ownsite_container).css({"width" : "100%"});
+                    });
+
+                $("#slidereference_iframe").css({"padding-top": $("#slidereference_close").css("line-height")});
             }
 
             // Prevent Document to Scroll if iframe is been scrolled
