@@ -19,85 +19,94 @@
 
     var defaults = {
             url: 'http://www.fabionolasco.com/',
+            mobile_friendly: "yes",
             loading_text: "Loading...",
+            preloading_css: {
+                display: "block",
+                width: "200px",
+                height: "200px",
+                margin: "0 auto",
+                border: "none",
+                position: "relative"
+            },
+            loadingcss : {
+                position : "fixed",
+                height : "100%",
+                backgroundColor : "#999",
+                borderLeft : "1px solid #000",
+                top : "0px",
+                left : "100%",
+                lineHeight : "100px",
+                fontSize : "2em",
+                fontWeight : "bold",
+                color : "#fff",
+                textAlign : "center",
+                zIndex : "2",
+                marginLeft : "0%"
+            },
             ownsite_width: "70%",
             ownsite_container: ".all",
             reference_width: "30%",
             iframe_border: "0",
             iframe_css: {
-                "width": "100%",
-                "height": "100%",
-                "padding": "20px"
+                width: "100%",
+                height: "100%",
+                padding: "20px"
             },
             resizable: "yes",
             resize_bar_css: {
-                "background-color": "#777",
-                "height": "100%",
-                "position": "absolute",
-                "width": "3px",
-                "cursor": "col-resize",
-                "top": "0px",
-                "left": "0px"
+                backgroundColor: "#777",
+                height: "100%",
+                position: "absolute",
+                width: "3px",
+                cursor: "col-resize",
+                top: "0px",
+                left: "0px"
             },
             resize_icon: "yes",
             resize_icon_css: {
-                "top": "50%",
-                "opacity": "0.5"
+                top: "50%",
+                opacity: "0.5"
             },
             close_btn: "no",
             close_btn_css: {
-                "display": "block",
-                "width": "18px",
-                "line-height": "24px",
-                "background-color": "#777",
-                "font-size": "11px",
-                "font-weight": "bold",
-                "color": "#fff",
-                "cursor": "pointer",
-                "position": "absolute",
-                "top": "0px",
-                "left": "0px",
-                "text-align": "center"
+                display: "block",
+                width: "18px",
+                lineHeight: "24px",
+                backgroundColor: "#777",
+                fontSize: "1.2em",
+                fontWeight: "bold",
+                color: "#fff",
+                cursor: "pointer",
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                textAlign: "center"
             },
             close_bar: "yes",
             close_bar_text: "CLOSE",
             close_bar_css: {
-                "display": "block",
-                "width": "100%",
-                "line-height": "30px",
-                "background-color": "#777",
-                "font-size": "11px",
-                "font-weight": "bold",
-                "color": "#fff",
-                "cursor": "pointer",
-                "position": "absolute",
-                "top": "0px",
-                "left": "0px",
-                "text-align": "center"
+                display: "block",
+                width: "100%",
+                lineHeight: "30px",
+                backgroundColor: "#777",
+                fontSize: "11px",
+                fontWeight: "bold",
+                color: "#fff",
+                cursor: "pointer",
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                textAlign: "center"
             },
             css : {
-                "position" : "fixed",
-                "height" : "100%",
-                "background-color" : "#fff",
-                "border-left" : "1px solid #000",
-                "top" : "0px",
-                "z-index" : "1",
-                "left" : "100%"
-            },
-            loadingcss : {
-                "position" : "fixed",
-                "height" : "100%",
-                "background-color" : "#999",
-                "border-left" : "1px solid #000",
-                "top" : "0px",
-                "left" : "100%",
-                "line-height" : "100px",
-                "font-size" : "2em",
-                "font-weight" : "bold",
-                "color" : "#fff",
-                "text-align" : "center",
-                "z-index" : "2",
-                "margin-left" : "0%"
+                position : "fixed",
+                height : "100%",
+                backgroundColor : "#fff",
+                borderLeft : "1px solid #000",
+                top : "0px",
+                zIndex : "1",
+                left : "100%"
             },
             animation : {
                 "-webkit-transition" : "all 150ms ease",
@@ -206,30 +215,46 @@
             // Create Reference Container
             var slide = $('<div/>'),
                 slidereference_loading = $('<div/>'),
-                slidereference_bars = $('<div/>'),
-                bars_style = "<style>loading{display:block;width:200px;height:200px;margin:0 auto;border:none;position:relative}.loader,.loader:after,.loader:before{background:#FFF;-webkit-animation:load1 1s infinite ease-in-out;animation:load1 1s infinite ease-in-out;width:1em;height:4em}.loader:after,.loader:before{position:absolute;top:0;content:''}.loader:before{left:-1.5em}.loader{text-indent:-9999em;margin:2em auto;position:relative;font-size:11px;-webkit-animation-delay:-.16s;animation-delay:-.16s}.loader:after{left:1.5em;-webkit-animation-delay:-.32s;animation-delay:-.32s}@-webkit-keyframes load1{0%,100%,80%{box-shadow:0 0 #FFF;height:4em}40%{box-shadow:0 -2em #fff;height:5em}}@keyframes load1{0%,100%,80%{box-shadow:0 0 #FFF;height:4em}40%{box-shadow:0 -2em #fff;height:5em}}</style>",
+                slidereference_animatebars = $('<div/>'),
+                bars_style = "<style>.loader,.loader:after,.loader:before{background:#FFF;-webkit-animation:load1 1s infinite ease-in-out;animation:load1 1s infinite ease-in-out;width:1em;height:4em}.loader:after,.loader:before{position:absolute;top:0;content:''}.loader:before{left:-1.5em}.loader{text-indent:-9999em;margin:2em auto;position:relative;font-size:11px;-webkit-animation-delay:-.16s;animation-delay:-.16s}.loader:after{left:1.5em;-webkit-animation-delay:-.32s;animation-delay:-.32s}@-webkit-keyframes load1{0%,100%,80%{box-shadow:0 0 #FFF;height:4em}40%{box-shadow:0 -2em #fff;height:5em}}@keyframes load1{0%,100%,80%{box-shadow:0 0 #FFF;height:4em}40%{box-shadow:0 -2em #fff;height:5em}}</style>",
                 w = this.config.reference_width,
                 resizable_bar,
                 resizable_bar_icon,
                 close_btn,
                 iframe,
+                preloading,
+                is_mobile_screen,
                 dragging = false,
                 ownsite_container = this.config.ownsite_container,
                 ownsite_width = this.config.ownsite_width;
 
+            // Mobile Friendly
+            if (this.config.mobile_friendly === "yes" && $(window).width() < 481){
+                ownsite_width = '100%';
+                this.config.ownsite_width = '100%';
+                w = '100%';
+                this.config.reference_width = '100%';
+                this.config.loadingcss.width = '100%';
+                this.config.css.width = '100%';
+                this.config.close_bar_css.lineHeight = "40px";
+                this.config.close_bar_css.fontSize = "1.2em";
+                is_mobile_screen = 'yes';
+            }
+
             // Add animation to container    
             $(this.config.ownsite_container).css(this.config.animation);
 
-            // Loading bars
-            $(slidereference_bars)
-                .prop("id", "slidereference_bars")
-                .html('<loading><div class="loader"></div></loading>' + bars_style)
+            // Loading
+            preloading = $("<div />")
+                .css(this.config.preloading_css)
+                .html('<div class="loader"></div>' + bars_style);
+            $(slidereference_animatebars)
+                .prop("id", "slidereference_animatebars")
+                .append(preloading)
                 .css(this.config.loadingcss);
-
-            // Loading screen
             $(slidereference_loading)
                 .prop("id", "slidereference_loading")
-                .html(this.config.loading_text + $(slidereference_bars).html())
+                .html(this.config.loading_text + $(slidereference_animatebars).html())
                 .css(this.config.loadingcss)
                 .css(this.config.animation)
                 .appendTo(this.element);
@@ -240,7 +265,7 @@
             window.setTimeout(function () { changeCss('#slidereference_loading', "margin-left", '-' + w); }, 1);
 
             // Resizable Bar
-            if (this.config.resizable === 'yes') {
+            if (this.config.resizable === 'yes' && is_mobile_screen !== 'yes') {
 
                 resizable_bar = $('<div />').prop("id", "slidereference_dragbar").css(this.config.resize_bar_css);
 
@@ -316,7 +341,7 @@
             }
 
             // Prevent Document to Scroll if iframe is been scrolled
-            $('#slidereference').bind('mousewheel DOMMouseScroll', function (e) {
+            $('#slidereference').on('mousewheel DOMMouseScroll touchmove scroll', function (e) {
                 var e0 = e.originalEvent,
                     delta = e0.wheelDelta || -e0.detail;
                 this.scrollTop += (delta < 0 ? 1 : -1) * 30;
