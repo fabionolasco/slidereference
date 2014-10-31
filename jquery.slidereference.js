@@ -10,8 +10,8 @@
 * @param {jQuery} $
 * @todo Remove CSS3 animation and add jQuery animation to make it work in older browsers
 * @todo Create minified version and put on github
-* @todo Create way to style iframe
-* @todo Close btn only hide, in case user wants to reopen
+* @todo Close-btn only hides iframe, in case user wants to reopen it, it is already loaded
+* @todo Improve Documentation
 **/
 (function ($) {
 
@@ -122,7 +122,7 @@
         // If another instace was already running, remove it
         $('.slidereference[data-active="yes"]').each(function () {
             if (clickelement !== $(this)) {
-                $(this).text($(this).attr('data-originaltext'));
+                $(this).html($(this).attr('data-originaltext'));
                 $(this).attr('data-active', 'no');
             }
         });
