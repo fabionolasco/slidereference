@@ -175,6 +175,7 @@
             // Data-options is passed, use it instead
             if ($(this).attr('data-options')) {
                 options  = $(this).attr('data-options');
+                options = options.replace("}", ",url:'" + $(this).attr('data-url') + "'}");
             }
 
             // Run plugin
