@@ -51,10 +51,35 @@
 					<h1>Reference Slider</h1>
 					<h2>jQuery Plugin</h2>
 					<hr>
-					<p class="clearfix">Ultra simple plugin to help you link two websites. It adds a slider with an iframe, so you can link the elements of your site, like keywords and buttons, to external websites like Dictionaries, <a href="javascript:void(0)" data-url="http://en.m.wikipedia.org/wiki/Wikipedia" class="slidereference" data-originaltext="Wikipedia" data-clicktext="Wikipedia">Wikipedia</a>, etc. In this way you don't bother your visitors with annoying popups nor make them leave your page.
+					<p>
+						<a href="javascript:void(0)"
+							class="slidereference btn btn-success btn-lg"
+							data-originaltext="OriginalText"
+							data-clicktext="ClickedText"
+							data-url="http://en.m.wikipedia.org/wiki/example">Example</a>
+						<br>&nbsp;
 					</p>
-					<hr>
-					<button class="slidereference btn btn-success btn-lg" data-originaltext="Activate" data-url="http://www.fabionolasco.com/" data-options="{'iframe_css':{'padding':'0px','width':'100%','height':'100%'}}">Activate</button>
+					<p class="clearfix">
+						Ultra simple jQuery plugin that helps you link two websites. 
+						It adds a sidebar to your page, with an iframe, so you can bring external 
+						content (like Dictionaries, Wikipedia, etc) without using annoying popups nor 
+						making your visitors leave the page.
+					</p>
+					<p>
+						Suppose that you have a website with long texts and difficult terminology. 
+						Now you want to offer a way for your users to look those terms on Wikipedia. 
+						To solve that problem, many people use popups, modal windows or tooltips. 
+						But according to some UX specialists those popups and modal windows are too 
+						blocking, and cause bad user experience. You could use tooltips, but often 
+						that is not enough.
+					</p>
+					<p>
+						Slide-reference jQuery plugin is a non-obstructive option that allows you 
+						to bring any content you want to your website. The sidebar have draggable 
+						border, so you can make it smaller or bigger. It can certain profit for 
+						code refactory, since it was my first attempt with JQuery plugin development. 
+						But I will wait for change requests on GitHub before working with 
+						this old project.
 					</p>
 					<hr>
 					<p class="clearfix">
@@ -73,12 +98,6 @@
 							</li>
 							<li>Run plugin</li>
 						</ol>
-						<br>
-						<a href="javascript:void(0)"
-							class="slidereference btn btn-success btn-lg"
-							data-originaltext="OriginalText"
-							data-clicktext="ClickedText"
-							data-url="http://en.m.wikipedia.org/wiki/example">Example</a>
 					</p>
 					<hr>
 					<h3>Customization</h3>
@@ -143,25 +162,15 @@
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="jquery.slidereference.js"></script>
+	<script src="jquery.slidereference.min.js"></script>
 	<script>
-
-		// >> After Page Load
 		$(function(){
-
 			$(document).slidereference('start');
-
-			// If you want to add event handlers only to the elements
-			// inside a specific container, you can do this:
-			//
-			// $('.mycontainuer').slidereference('start');
-			// 
-			// In this way all elements with the class .slidereference
-			// that are inside the give container will get the click event.
-
+            // This command will look for an element with the class .slidereference
+            // and add some functionality to it.
+            // If you want to add it to a specific container, you can do this:
+            // $('.container').slidereference('start');
 		});
-		// << After Page Load
-
 	</script>
 
 </body>
