@@ -1,6 +1,6 @@
 {
   "name": "slidereference",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Ultra simple jQuery plugin that helps you link two websites. It adds a sidebar to your page, with an iframe, so you can bring external content (like Dictionaries, Wikipedia, etc) without using annoying popups nor making your visitors leave the page.",
   "main": "jquery.slidereference.js",
   "repository": {

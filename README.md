@@ -1,7 +1,8 @@
 #slidereference
 ==============
 
-https://github.com/fabionolasco/slidereference
+Try it: 
+[http://fabionolasco.github.io/slidereference/](http://fabionolasco.github.io/slidereference/)
 
 Ultra simple jQuery plugin that helps you link two websites. 
 It adds a sidebar to your page, with an iframe, so you can bring external 
