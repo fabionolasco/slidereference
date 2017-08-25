@@ -25,6 +25,16 @@ this old project.
 
 ## Usage
 
+1. Add jQuery to page
+2. Add slide-reference JS to page
+3. Add attributes to the elements that you desire to use to activate the plugin
+    - class = "slidereference"
+    - data-url = "YourURL"
+    - (optional) data-originaltext = "ElementText"
+    - (optional) data-clicktext = "ElementTextAfterClicked"
+    - (optional) data-options = "{JS Object Will All Options for Slider}"
+4. Execute plugin after page loads
+
 ```html
 <html>
 <head></head>
